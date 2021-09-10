@@ -1,6 +1,7 @@
-site = "http://naver.com"
+#url = "http://google.com"
+url = "http://youtube.com"
 
-site = site.replace("http://","")
+site = url.replace("http://","")
 print(site)
 
 number = int(site.index("."))
@@ -13,4 +14,7 @@ three_word= site[0:3]
 
 
 #규칙3
-print(f"생성된 비밀번호 : {three_word}{password_number}{e_number}!")
+print(f"생성된 {url} 사이트의 비밀번호 : {three_word}{password_number}{e_number}!")
+
+#solution
+#my_str = my_str[:my_str.index(".")] 점 뒤로는 삭제==점 앞까지만 슬라이싱
