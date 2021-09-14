@@ -13,6 +13,9 @@ for i in customer:
     print(f"[{user}] {i}번째 손님 (소요시간 : {random_time})")
 print(f"총 탑승 승객 : {sum_customer}분")
 
+
+
+# solution
 cnt = 0
 for i in range(1,51):
     time = randrange(5,51)
