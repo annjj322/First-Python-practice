@@ -35,13 +35,13 @@ class Unit:
         print(f"{self.name} 유닛이 생성 되었습니다.")
         print(f"체력 {self.hp}, 공격력{self.damage}")
 
-marine1 = Unit("마린", 40, 5)
+marine1 = Unit("마린", 40, 5) # 결론적으로 실행하게 해주는 코드 마린이라는 유닛의 이름, 체력, 공격력
 marine2 = Unit("마린", 40, 5)
 tank = Unit("탱크", 150, 35)
 
 # 레이스 : 공중 유닛, 클로킹 (상대방에게 보이지 않음)
 wraith1 = Unit("레이스", 80, 5)
-print(f"유닛 이름 : {wraith1.name}, 공격력 : {wraith1.damage}")
+print(f"유닛 이름 : {wraith1.name}, 공격력 : {wraith1.damage}") # 일반 출력문으로 부가설명만 하는 것.
 
 # 마인드 컨트롤 : 상대방 유닛을 내 것으로 만드는 것
 wraith2 = Unit("빼앗은 레이스", 80, 5)
