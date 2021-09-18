@@ -1,3 +1,5 @@
+from random import *
+
 class Unit: 
     def __init__(self, name, hp, speed):
         self.name = name 
@@ -13,7 +15,6 @@ class Unit:
             print("{0} : 파괴되었습니다.".format(self.name))
 
     def move(self, location):
-        print("[지상 유닛 이동]")
         print("{0} : {1} 방향으로 이동합니다. [속도 {2}]".format(self.name, location, self.speed))
        
 class AttackUnit(Unit):
@@ -22,7 +23,7 @@ class AttackUnit(Unit):
         self.damage = damage
 
     def attack(self, location,):
-        print("{0} : {1} 방향으로 적군을 공격 합니다. [공격력 {2}][속도 ({3})]".format(self.name, location, self.damage, self.speed))
+        print("{0} : {1} 방향으로 적군을 공격 합니다. [공격력 {2}]".format(self.name, location, self.damage))
 
 
 # 마린
@@ -79,22 +80,74 @@ class FlyableAttackUnit(AttackUnit, Flyable):
         Flyable.__init__(self, flying_speed)
 
     def move(self, location):
-        print("[공중 유닛 이동]")
         self.fly(self.name, location)
 
-# 건물
-class BuildingUnit(Unit):
-    def __init__(self, name, hp, location):
-        pass # 일단은 완성된 것처럼 여겨지는 것. 일단 넘어감.
+# 레이스
+class Wraith(FlyableAttackUnit):
+    def __init__(self):
+        FlyableAttackUnit.__init__(self,"레이스",80,20,5)
+        self.clocked = False # 클로킹 모드 정의 (해제 상태)
 
-# 서플라이 디폿 : 건물, 1개 건물 = 8개 유닛.
-supply_depot = BuildingUnit("서플라이 디폿", 500, "7시") # pass 
+    def clocking(self):
+        if self.clocked == True:
+            print("{0} : 클로킹 모드를 해제합니다.".format(self.name))
+            self.clocked == False
+        else:
+            print("{0} : 클로킹 모드를 실행합니다.".format(self.name))
+            self.clocked == True
 
 def game_start():
     print("[알림] 새로운 게임을 시작합니다.")
 
-def game_over(): # pass 함수가 실행되지 X
-    pass
+def game_over():
+    print("Player : gg")
+    print("[Player] 님이 게임에서 퇴장하셨습니다.")
 
+# 게임 진행
 game_start()
+
+m1 = Marine()
+m2 = Marine()
+m3 = Marine()
+
+t1 = Tank()
+t2 = Tank()
+
+w1 = Wraith()
+
+# 유닛 일괄 관리
+attack_units = []
+attack_units.append(m1)
+attack_units.append(m2)
+attack_units.append(m3)
+attack_units.append(t1)
+attack_units.append(t2)
+attack_units.append(w1)
+
+# 전군 이동
+for unit in attack_units:
+    unit.move("1시")
+
+# 탱크 시즈모드 개발
+Tank.seize_developed = True
+print("[알림] 탱크 시즈 모드 개발이 완료되었습니다.")
+
+# 공격 모드 준비 (탱크 : 시즈모드, 레이스 : 클로킹, 마린 : 스팀팩)
+for unit in attack_units:
+    if isinstance(unit, Marine): # 현재 유닛이 마린인가 (unit in Marine)
+        unit.stimpack()
+    elif isinstance(unit, Tank):
+        unit.set_seize_mode()
+    elif isinstance(unit, Wraith):
+        unit.clocking()
+
+# 전군 공격
+for unit in attack_units:
+    unit.attack("1시")
+
+# 전군 피해
+for unit in attack_units:
+    unit.damaged(randint(5,21)) # 공격을 랜덤으로 받음
+
+# 게임 종료
 game_over()
